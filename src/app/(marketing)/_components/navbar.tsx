@@ -2,8 +2,11 @@ import Link from 'next/link';
 
 import BrandLogo from '@/components/brand-logo';
 import { SignInButton, SignedIn, SignedOut } from '@clerk/nextjs';
+import { currentUser } from '@clerk/nextjs/server';
 
-const Navbar = () => {
+const Navbar = async () => {
+  const user = await currentUser();
+
   return (
     <header className="flex py-6 shadow-xl fixed top-0 w-full z-10 bg-background/95">
       <nav className="flex items-center gap-10 container font-semibold">
@@ -20,12 +23,15 @@ const Navbar = () => {
           About
         </Link>
         <span className="text-lg">
-          <SignedIn>
-            <Link href="/dashboard">Dashboard</Link>
-          </SignedIn>
-          <SignedOut>
-            <SignInButton>Login</SignInButton>
-          </SignedOut>
+          {user ? (
+            <SignedIn>
+              <Link href="/dashboard">Dashboard</Link>
+            </SignedIn>
+          ) : (
+            <SignedOut>
+              <SignInButton>Login</SignInButton>
+            </SignedOut>
+          )}
         </span>
       </nav>
     </header>
