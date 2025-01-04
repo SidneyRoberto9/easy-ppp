@@ -3,6 +3,7 @@ import '@/styles/globals.css';
 import localFont from 'next/font/local';
 import { PropsWithChildren } from 'react';
 
+import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 import { ClerkProvider } from '@clerk/nextjs';
 
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
           )}
         >
           {children}
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
