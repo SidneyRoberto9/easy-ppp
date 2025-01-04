@@ -62,7 +62,7 @@ const AddToSiteProductModalContent = ({ id }: AddToSiteProductModalContentProps)
   };
 
   return (
-    <DialogContent className="max-w-max">
+    <DialogContent className="max-w-screen-md">
       <DialogHeader>
         <DialogTitle className="text-2xl">Start Earning PPP Sales!</DialogTitle>
         <DialogDescription>

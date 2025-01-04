@@ -15,23 +15,30 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { ProductDetailsFormType, productDetailsSchema } from '@/schemas/products';
-import { createProduct } from '@/server/actions/products';
+import { Product, ProductDetailsFormType, productDetailsSchema } from '@/schemas/products';
+import { createProduct, updateProduct } from '@/server/actions/products';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-const ProductDetailsForm = () => {
+interface ProductDetailsFormProps {
+  product?: Product;
+}
+
+const ProductDetailsForm = ({ product = undefined }: ProductDetailsFormProps) => {
   const { toast } = useToast();
   const form = useForm<ProductDetailsFormType>({
     resolver: zodResolver(productDetailsSchema),
-    defaultValues: {
-      name: '',
-      url: '',
-      description: '',
-    },
+    defaultValues: product
+      ? { ...product, description: product?.description ?? '' }
+      : {
+          name: '',
+          url: '',
+          description: '',
+        },
   });
 
   const onSubmit = async (values: ProductDetailsFormType) => {
-    const data = await createProduct(values);
+    const action = product == null ? createProduct : updateProduct.bind(null, product.id);
+    const data = await action(values);
 
     if (data?.message) {
       toast({

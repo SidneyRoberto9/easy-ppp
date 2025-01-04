@@ -3,11 +3,22 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-import { ProductDetailsFormType, productDetailsSchema } from '@/schemas/products';
+import {
+  ProductCountryDiscountsFormType,
+  productCountryDiscountsSchema,
+  productCustomizationSchema,
+  ProductCustomizationSchemaFormType,
+  ProductDetailsFormType,
+  productDetailsSchema,
+} from '@/schemas/products';
 import {
   createProduct as createProductDb,
   deleteProduct as deleteProductDb,
+  updateCountryDiscounts as updateCountryDiscountsDb,
+  updateProductCustomization as updateProductCustomizationDb,
+  updateProduct as updateProductDb,
 } from '@/server/db/products';
+import { canCreateProduct, canCustomizeBanner } from '@/server/permissions';
 import { auth } from '@clerk/nextjs/server';
 
 interface CreateProductResponse {
@@ -20,14 +31,55 @@ const createProduct = async (
 ): Promise<CreateProductResponse | undefined> => {
   const { userId } = await auth();
   const { success, data } = productDetailsSchema.safeParse(unsafeData);
+  const canCreate = await canCreateProduct(userId);
 
-  if (!success || userId == null) {
+  if (!success || userId == null || !canCreate) {
     return { error: true, message: 'There was an error creating your product' };
   }
 
   const { id } = await createProductDb({ ...data, clerkUserId: userId });
 
   redirect(`/dashboard/products/${id}/edit?tab=countries`);
+};
+
+const updateProduct = async (
+  id: string,
+  unsafeData: ProductDetailsFormType,
+): Promise<CreateProductResponse | undefined> => {
+  const { userId } = await auth();
+  const { success, data } = productDetailsSchema.safeParse(unsafeData);
+  const errorMessage = 'There was an error updating your product';
+
+  if (!success || userId == null) {
+    return { error: true, message: errorMessage };
+  }
+
+  const isSuccess = await updateProductDb(data, { id, userId });
+
+  return {
+    error: !isSuccess,
+    message: isSuccess ? 'Product details updated' : errorMessage,
+  };
+};
+
+const updateProductCustomization = async (
+  id: string,
+  unsafeData: ProductCustomizationSchemaFormType,
+) => {
+  const { userId } = await auth();
+  const { success, data } = productCustomizationSchema.safeParse(unsafeData);
+  const canCustomize = await canCustomizeBanner(userId);
+
+  if (!success || userId == null || !canCustomize) {
+    return {
+      error: true,
+      message: 'There was an error updating your banner',
+    };
+  }
+
+  await updateProductCustomizationDb(data, { productId: id, userId });
+
+  return { error: false, message: 'Banner updated' };
 };
 
 const deleteProduct = async (id: string) => {
@@ -50,4 +102,52 @@ const deleteProduct = async (id: string) => {
   };
 };
 
-export { createProduct, deleteProduct };
+const updateCountryDiscounts = async (id: string, unsafeData: ProductCountryDiscountsFormType) => {
+  const { userId } = await auth();
+  const { success, data } = productCountryDiscountsSchema.safeParse(unsafeData);
+
+  if (!success || userId == null) {
+    return {
+      error: true,
+      message: 'There was an error saving your country discounts',
+    };
+  }
+
+  const insert: {
+    countryGroupId: string;
+    productId: string;
+    coupon: string;
+    discountPercentage: number;
+  }[] = [];
+  const deleteIds: { countryGroupId: string }[] = [];
+
+  data.groups.forEach((group) => {
+    if (
+      group.coupon != null &&
+      group.coupon.length > 0 &&
+      group.discountPercentage != null &&
+      group.discountPercentage > 0
+    ) {
+      insert.push({
+        countryGroupId: group.countryGroupId,
+        coupon: group.coupon,
+        discountPercentage: group.discountPercentage / 100,
+        productId: id,
+      });
+    } else {
+      deleteIds.push({ countryGroupId: group.countryGroupId });
+    }
+  });
+
+  await updateCountryDiscountsDb(deleteIds, insert, { productId: id, userId });
+
+  return { error: false, message: 'Country discounts saved' };
+};
+
+export {
+  createProduct,
+  deleteProduct,
+  updateCountryDiscounts,
+  updateProduct,
+  updateProductCustomization,
+};

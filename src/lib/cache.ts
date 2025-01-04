@@ -5,6 +5,8 @@ const CACHE_TAGS = {
   products: 'products',
   productViews: 'productViews',
   subscription: 'subscription',
+  countries: 'countries',
+  countryGroups: 'countryGroups',
 } as const;
 
 interface DBCacheParams {
@@ -43,7 +45,7 @@ function dbCache<T extends (...args: any[]) => Promise<any>>(
   cb: Parameters<typeof unstable_cache<T>>[0],
   { tags }: DBCacheParams,
 ) {
-  return cache(unstable_cache<T>(cb, undefined, { tags: tags }));
+  return cache(unstable_cache<T>(cb, undefined, { tags: [...tags, '*'] }));
 }
 
 const revalidateDbCache = ({ tag, id, userId }: DBRevalidateCacheParams) => {

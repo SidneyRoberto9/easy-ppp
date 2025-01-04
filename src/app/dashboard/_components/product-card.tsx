@@ -7,14 +7,14 @@ import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
-import { DropdownMenu } from '@/components/ui/dropdown-menu';
-import { Product } from '@/schemas/products';
 import {
+  DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@radix-ui/react-dropdown-menu';
+} from '@/components/ui/dropdown-menu';
+import { Product } from '@/schemas/products';
 
 const ProductCard = ({ id, name, url, description }: Product) => {
   return (
