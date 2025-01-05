@@ -74,4 +74,9 @@ const getUserSubscriptionInternal = (userId: string) => {
   });
 };
 
-export { getUserSubscriptionTier, updateUserSubscription };
+export {
+  createUserSubscription,
+  getUserSubscription,
+  getUserSubscriptionTier,
+  updateUserSubscription,
+};
