@@ -1,11 +1,12 @@
 import { Fragment } from 'react';
+import Link from 'next/link';
+import { PlusIcon } from 'lucide-react';
 
-import NoProducts from '@/app/dashboard/_components/no-products';
-import ProductGrid from '@/app/dashboard/_components/product-grid';
-import { Button } from '@/components/ui/button';
-import { getProducts } from '@/server/db/products';
 import { auth } from '@clerk/nextjs/server';
-import { Link, PlusIcon } from 'lucide-react';
+import { getProducts } from '@/server/db/products';
+import { Button } from '@/components/ui/button';
+import ProductGrid from '@/app/dashboard/_components/product-grid';
+import NoProducts from '@/app/dashboard/_components/no-products';
 
 export default async function Page() {
   const { userId, redirectToSignIn } = await auth();

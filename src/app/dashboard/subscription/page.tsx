@@ -70,7 +70,7 @@ export default async function Page() {
                     await createCustomerPortalSession();
                   }}
                 >
-                  <Button variant="accent" className="text-lg rounded-lg" size="lg">
+                  <Button variant="accent" className="text-lg rounded-lg -ml-6 mt-4" size="lg">
                     Manage Subscription
                   </Button>
                 </form>
