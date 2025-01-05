@@ -1,6 +1,6 @@
 import { getViewsByCountryChartData } from '@/server/db/productViews';
 import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card';
-import ViewsByCountryChart from '@/app/dashboard/analytics/_components/view-by-country-chart';
+import ViewsByCountryChart from '@/app/dashboard/analytics/_components/charts/view-by-country-chart';
 
 type ViewsByCountryCardProps = Parameters<typeof getViewsByCountryChartData>[0];
 

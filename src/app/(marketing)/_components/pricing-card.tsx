@@ -1,16 +1,12 @@
-import Feature from '@/app/(marketing)/_components/feature';
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { subscriptionTiersInOrder } from '@/data/subscription-tiers';
-import { formatCompactNumber } from '@/lib/formatters';
 import { SignUpButton } from '@clerk/nextjs';
+import { cn } from '@/lib/utils';
+import { formatCompactNumber } from '@/lib/formatters';
+import { subscriptionTiersInOrder } from '@/data/subscription-tiers';
+import {
+    CardTitle, CardHeader, CardFooter, CardDescription, CardContent, Card
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import Feature from '@/app/(marketing)/_components/feature';
 
 type PricingCardProps = (typeof subscriptionTiersInOrder)[number];
 
@@ -26,7 +22,17 @@ const PricingCard = ({
   const isMostPopular = name === 'Standard';
 
   return (
-    <Card>
+    <Card
+      className={cn(
+        'relative shadow-none rounded-2xl overflow-hidden',
+        isMostPopular ? 'border-accent border-2' : 'border-none',
+      )}
+    >
+      {isMostPopular && (
+        <div className="absolute top-24 rotate-45 origin-top-right -right-8 bg-accent text-accent-foreground  py-1 px-10">
+          Most Popular
+        </div>
+      )}
       <CardHeader>
         <div className="text-accent font-semibold mb-8">{name}</div>
         <CardTitle className="text-xl font-bold">${priceInCents / 100} /mo</CardTitle>

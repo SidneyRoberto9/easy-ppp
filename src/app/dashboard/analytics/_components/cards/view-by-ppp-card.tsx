@@ -1,6 +1,6 @@
 import { getViewsByPPPChartData } from '@/server/db/productViews';
 import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card';
-import ViewsByPPPChart from '@/app/dashboard/analytics/_components/view-by-ppp-chart';
+import ViewsByPPPChart from '@/app/dashboard/analytics/_components/charts/view-by-ppp-chart';
 
 type ViewsByPPPCardProps = Parameters<typeof getViewsByPPPChartData>[0];
 

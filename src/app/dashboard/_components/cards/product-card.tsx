@@ -1,20 +1,16 @@
-import { Ellipsis } from 'lucide-react';
 import Link from 'next/link';
+import { Ellipsis } from 'lucide-react';
 
-import AddToSiteProductModalContent from '@/app/dashboard/_components/add-to-site-product-modal-content';
-import DeleteProductAlertModalContent from '@/app/dashboard/_components/delete-product-alert-modal-content';
-import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Dialog, DialogTrigger } from '@/components/ui/dialog';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Product } from '@/schemas/products';
+import {
+    DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu
+} from '@/components/ui/dropdown-menu';
+import { DialogTrigger, Dialog } from '@/components/ui/dialog';
+import { CardTitle, CardHeader, CardDescription, CardContent, Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { AlertDialogTrigger, AlertDialog } from '@/components/ui/alert-dialog';
+import DeleteProductAlertModalContent from '@/app/dashboard/_components/modals/delete-product-alert-modal-content';
+import AddToSiteProductModalContent from '@/app/dashboard/_components/modals/add-to-site-product-modal-content';
 
 const ProductCard = ({ id, name, url, description }: Product) => {
   return (

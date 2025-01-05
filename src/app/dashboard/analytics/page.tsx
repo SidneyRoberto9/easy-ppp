@@ -12,10 +12,10 @@ import {
 import { Button } from '@/components/ui/button';
 import HasPermission from '@/components/has-permission';
 import TimezoneDropdownMenuItem from '@/app/dashboard/_components/timezone-dropdown-menu-item';
-import ViewsByPPPCard from '@/app/dashboard/analytics/_components/view-by-ppp-card';
-import ViewsByDayCard from '@/app/dashboard/analytics/_components/view-by-day-card';
-import ViewsByCountryCard from '@/app/dashboard/analytics/_components/view-by-country-card';
 import ProductDropdown from '@/app/dashboard/analytics/_components/product-dropdown';
+import ViewsByPPPCard from '@/app/dashboard/analytics/_components/cards/view-by-ppp-card';
+import ViewsByDayCard from '@/app/dashboard/analytics/_components/cards/view-by-day-card';
+import ViewsByCountryCard from '@/app/dashboard/analytics/_components/cards/view-by-country-card';
 
 export default async function Page({
   searchParams,

@@ -1,6 +1,6 @@
 import { getViewsByDayChartData } from '@/server/db/productViews';
 import { CardTitle, CardHeader, CardContent, Card } from '@/components/ui/card';
-import ViewsByDayChart from '@/app/dashboard/analytics/_components/view-by-day-chart';
+import ViewsByDayChart from '@/app/dashboard/analytics/_components/charts/view-by-day-chart';
 
 type ViewsByDayCardProps = Parameters<typeof getViewsByDayChartData>[0];
 

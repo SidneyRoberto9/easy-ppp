@@ -1,13 +1,15 @@
-import { headers } from 'next/headers';
-import { notFound } from 'next/navigation';
-import { NextRequest } from 'next/server';
 import { createElement } from 'react';
+import { NextRequest } from 'next/server';
+import { notFound } from 'next/navigation';
+import { headers } from 'next/headers';
 
-import Banner from '@/components/banner';
-import { env } from '@/data/env/server';
+import { canShowDiscountBanner, canRemoveBranding } from '@/server/permissions';
 import { createProductView } from '@/server/db/productViews';
 import { getProductForBanner } from '@/server/db/products';
-import { canRemoveBranding, canShowDiscountBanner } from '@/server/permissions';
+import { env } from '@/data/env/server';
+import Banner from '@/components/banner';
+
+export const runtime = 'edge';
 
 export async function GET(
   request: NextRequest,

@@ -1,17 +1,17 @@
-import { startOfMonth } from 'date-fns';
 import { Fragment } from 'react';
+import { startOfMonth } from 'date-fns';
 
-import SubscriptionPricingCard from '@/app/dashboard/_components/subscription-pricing-card';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { subscriptionTiers, subscriptionTiersInOrder } from '@/data/subscription-tiers';
-import { formatCompactNumber } from '@/lib/formatters';
-import { createCustomerPortalSession } from '@/server/actions/stripe';
+import { auth } from '@clerk/nextjs/server';
+import { getUserSubscriptionTier } from '@/server/db/subscription';
 import { getProductViewCount } from '@/server/db/productViews';
 import { getProductCount } from '@/server/db/products';
-import { getUserSubscriptionTier } from '@/server/db/subscription';
-import { auth } from '@clerk/nextjs/server';
+import { createCustomerPortalSession } from '@/server/actions/stripe';
+import { formatCompactNumber } from '@/lib/formatters';
+import { subscriptionTiersInOrder, subscriptionTiers } from '@/data/subscription-tiers';
+import { Progress } from '@/components/ui/progress';
+import { CardTitle, CardHeader, CardDescription, CardContent, Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import SubscriptionPricingCard from '@/app/dashboard/_components/cards/subscription-pricing-card';
 
 export default async function Page() {
   const { userId, redirectToSignIn } = await auth();

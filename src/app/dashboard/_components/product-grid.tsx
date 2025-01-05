@@ -1,5 +1,5 @@
-import ProductCard from '@/app/dashboard/_components/product-card';
 import { Product } from '@/schemas/products';
+import ProductCard from '@/app/dashboard/_components/cards/product-card';
 
 interface ProductGridProps {
   products: Product[];
