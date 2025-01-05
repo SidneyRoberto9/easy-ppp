@@ -1,5 +1,3 @@
-import { ArrowRightIcon, PlusIcon } from 'lucide-react';
-import Link from 'next/link';
 import { Fragment } from 'react';
 
 import NoProducts from '@/app/dashboard/_components/no-products';
@@ -7,6 +5,7 @@ import ProductGrid from '@/app/dashboard/_components/product-grid';
 import { Button } from '@/components/ui/button';
 import { getProducts } from '@/server/db/products';
 import { auth } from '@clerk/nextjs/server';
+import { Link, PlusIcon } from 'lucide-react';
 
 export default async function Page() {
   const { userId, redirectToSignIn } = await auth();
@@ -23,20 +22,14 @@ export default async function Page() {
 
   return (
     <Fragment>
-      <h2 className="mb-6 text-3xl font-semibold flex justify-between">
-        <Link className="group flex gap-2 items-center hover:underline" href="/dashboard/products">
-          Products
-          <ArrowRightIcon className="group-hover:translate-x-1 transition-transform" />
-        </Link>
-
+      <h1 className="mb-6 text-3xl font-semibold flex justify-between">
+        Products
         <Button asChild>
           <Link href="/dashboard/products/new">
-            <PlusIcon className="size-4 mr-2" />
-            New Product
+            <PlusIcon className="size-4 mr-2" /> New Product
           </Link>
         </Button>
-      </h2>
-
+      </h1>
       <ProductGrid products={products} />
     </Fragment>
   );

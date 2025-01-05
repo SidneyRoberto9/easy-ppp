@@ -9,14 +9,14 @@ import { getProduct } from '@/server/db/products';
 import { auth } from '@clerk/nextjs/server';
 import { TabsContent } from '@radix-ui/react-tabs';
 
-export default async function Page({ params }: { params: { productId: string } }) {
+export default async function Page({ params }: { params: Promise<{ productId: string }> }) {
   const { userId, redirectToSignIn } = await auth();
 
   if (userId == null) {
     return redirectToSignIn();
   }
 
-  const productId = params.productId;
+  const { productId } = await params;
 
   const product = await getProduct({ userId, id: productId });
 
