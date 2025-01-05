@@ -1,4 +1,4 @@
-import { Link } from 'lucide-react';
+import Link from 'next/link';
 import { PropsWithChildren } from 'react';
 
 import { Button } from '@/components/ui/button';
