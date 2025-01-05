@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import { PropsWithChildren } from 'react';
 
 import { Toaster } from '@/components/ui/toaster';
+import { SITE_CONFIG } from '@/config';
 import { cn } from '@/lib/utils';
 import { ClerkProvider } from '@clerk/nextjs';
 
@@ -20,9 +21,7 @@ const geistMono = localFont({
   weight: '100 900',
 });
 
-export const metadata: Metadata = {
-  title: 'Parity Deals',
-};
+export const metadata: Metadata = SITE_CONFIG;
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
